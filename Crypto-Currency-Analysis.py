@@ -116,8 +116,8 @@ def load_data():
 data = load_data()
 
 
-# Display Top 10 by Default
-default_top_10 = data.Coin_Name[0:7]
+# Display Top 5 by Default
+default_top_10 = data.Coin_Name[0:5]
 selected_coins = default_top_10 
 # data_of_selected_coins = data[data.Coin_Name.isin(selected_coins)].loc[0:, ['Coin_Name', 'Symbol', 'Price(in USD)', 'Volume_24h','Percent_change_1h']]
 data_of_selected_coins = data[data.Coin_Name.isin(selected_coins)].iloc[0:, 0:5]
@@ -184,19 +184,16 @@ def plot(data_change=None):
         data_change = data_change.sort_values(by=['Percent_change_24h'])
         data_change['Percent_change_24h'].plot(kind='barh', color=data_change.Positive_Percent_change_24h.map({True:'g', False:'r'}))
         column3.pyplot(plt)
-
-        
-
+  
     if selected_percent_timeframe == 'Percent_change_7d':
         column2.table(data_change.sort_values(by=['Percent_change_7d'], ascending = False)[['Coin_Name','Percent_change_1h', 'Percent_change_24h', 'Percent_change_7d']])
         
         column3.write('* 7-Days Change')
         plt.figure(figsize=(5,26))
         plt.subplots_adjust(top=2.85, bottom = 0)
-
+        
         data_change = data_change.sort_values(by=['Percent_change_7d'])
         data_change['Percent_change_7d'].plot(kind='barh', color=data_change.Positive_Percent_change_7d.map({True:'g', False:'r'}))
         column3.pyplot(plt)
-
-
+        
 plot(data_change)
